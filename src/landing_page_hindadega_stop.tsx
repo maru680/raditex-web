@@ -49,11 +49,11 @@ function StickyContactCTA({ onContact }: { onContact: () => void }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: 0.6, ease: "easeOut" }}
-      className="fixed bottom-5 right-5 z-[60]"
+      className="fixed bottom-10 right-5 z-[60]"
     >
       <div className="flex items-center gap-2 rounded-full border border-cyan-400/20 bg-slate-950/90 p-2 shadow-2xl shadow-cyan-950/30 backdrop-blur-xl">
         <a
-          href="tel:+3725000000"
+          href="tel:+3725011797"
           className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 text-sm font-medium text-white transition hover:border-cyan-400/20 hover:bg-white/10"
           aria-label="Helista kohe"
         >
@@ -62,7 +62,7 @@ function StickyContactCTA({ onContact }: { onContact: () => void }) {
         <motion.button
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          type="button"
+          type="submit"
           onClick={onContact}
           className="inline-flex h-11 items-center justify-center rounded-full bg-cyan-400 px-4 text-sm font-semibold text-slate-950 transition"
         >
@@ -99,7 +99,7 @@ function HeroDiagram({ dashboardCards }: { dashboardCards: DashboardCard[] }) {
           <div className="text-xl font-semibold text-white">Reaalajas tootmise ülevaade</div>
         </div>
         <motion.div
-          animate={{ opacity: [0.75, 1, 0.75] }}
+          animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
           className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300"
         >
@@ -380,7 +380,7 @@ function DetailPageTemplate({
 export function DigitalRoadmapPage({ onBack, onContact }: DetailPageProps) {
   return (
     <DetailPageTemplate
-      eyebrow="Digitaalne teekaart"
+      eyebrow="Digitaliseerimise teekaart"
       title="Selge plaan, kuidas tehnoloogia toetab teie äri kasvu"
       intro="Digitaalne teekaart ei ole raport. See on otsuste tegemise tööriist. Loome struktureeritud plaani, mis näitab täpselt, mida teha, millal teha ja mis mõju see annab."
       sections={[
@@ -562,13 +562,14 @@ function HomeView({
             isScrolled ? "py-2" : "py-4"
           }`}
         >
-          <div
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className={`font-semibold uppercase tracking-[0.24em] text-cyan-300 transition-all duration-300 ${
               isScrolled ? "text-xs" : "text-sm"
             }`}
           >
-            IT & Digikonsultatsioon
-          </div>
+            <img src="/logo_white.svg" alt="Logo" className="h-5 w-auto w-auto sm:h-7" />
+          </button>
 
           <nav
             className={`hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-sm text-slate-300 transition-all duration-300 md:flex ${
@@ -577,8 +578,8 @@ function HomeView({
           >
             {[
               { id: "teenused", label: "Teenused" },
-              { id: "pricing", label: "Hinnastamine" },
               { id: "miks", label: "Miks meie" },
+              { id: "pricing", label: "Hinnastamine" },
               { id: "tulemused", label: "Tulemused" },
               { id: "kontakt", label: "Kontakt" },
             ].map((item) => {
@@ -640,7 +641,7 @@ function HomeView({
         <section className="mx-auto grid max-w-7xl gap-14 px-6 pb-20 pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pb-28 lg:pt-24">
           <div className="max-w-2xl">
             <div className="mb-6 inline-flex items-center rounded-full border border-cyan-400/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">
-              IT- ja digikonsultant VKE-dele
+              IT- ja digikonsultant tootmisettevõtetele
             </div>
             <h1 className="max-w-xl text-5xl font-semibold leading-tight tracking-tight text-white md:text-6xl">
               IT, mis töötab. Äri, mis kasvab.
@@ -649,7 +650,7 @@ function HomeView({
               Lõpetage IT probleemide lahendamine ja hakake juhtima äri. Me loome süsteemi, kus andmed liiguvad automaatselt, otsused põhinevad faktidel ja riskid on kontrolli all.
             </p>
             <div className="mt-5 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-200">
-              Tüüpiline tulemus: vähem käsitööd · rohkem kontrolli · kiirem kasv
+              Kiire põhjalik ülevaade · selge plaan · mõõdetavad tulemused
             </div>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -692,14 +693,24 @@ function HomeView({
           </div>
 
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-5">
-            {["Raintar", "Monik", "Raditex", "Maadlex", "Scandic"].map((name) => (
+            {[
+              { name: "Haapsalu Uks", file: "haapsalu_uks_logo.png" },
+              { name: "Harviker", file: "harviker_logo.jpg" },
+              { name: "Sulemees", file: "sulemees_logo.png" },
+              { name: "Carglass", file: "carglass_logo.png" },
+              { name: "Printbest", file: "printbest_logo.png" },
+            ].map((client) => (
               <motion.div
-                key={name}
+                key={client.name}
                 whileHover={{ scale: 1.05, y: -2 }}
                 className="flex h-20 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-sm text-slate-400 transition hover:border-cyan-400/30 hover:text-white"
               >
-                {name}
-              </motion.div>
+                <img
+                src={`/clients/${client.file}`}
+                alt={client.name}
+                className="max-h-18 w-auto object-contain opacity-70 transition hover:opacity-100"
+               />
+             </motion.div>
             ))}
           </div>
         </section>
@@ -739,11 +750,12 @@ function HomeView({
                 Üks partner. Kõik kriitilised punktid kaetud.
               </div>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-                IT ei pea olema killustunud, reageeriv ega raskesti juhitav.
+                Kas teie IT toetab ettevõtte kasvu - või pidurdab?
               </h2>
             </div>
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 text-lg leading-8 text-slate-300">
-              Väikeettevõtte IT on sageli killustunud: keegi haldab võrku, keegi hooldab arvuteid, strateegia on katmata, andmed on laiali ja turvariskid jäävad tähelepanuta. Me ei täida üksikut lünka. Aitame näha ja lahendada kogu pilti — strateegiast protsessideni, tarkvaravalikust küberturvalisuse ja AI rakendamiseni. Ilma tehnilise žargoonita.
+              Ettevõtjad kaotavad igapäevaselt aega ja raha protsessidele, mis ei tööta; tarkvarale, mis ei sobi ja turvariskidele, mida ei nähta. Aitame näha tervikut ja anda lahendus — strateegiast protsessideni, tarkvara valikust küberturvalisuse ja AI rakendamiseni.
+.
             </div>
           </div>
         </section>
@@ -1055,31 +1067,20 @@ function HomeView({
                 <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2">Ilma kohustuseta</span>
                 <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2">Vastus 24h jooksul</span>
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: 0.08 }}
-              className="rounded-[2rem] border border-white/10 bg-white/5 p-8 md:p-10"
-            >
-              <h3 className="text-2xl font-semibold text-white">Broneeri tasuta konsultatsioon</h3>
-              <p className="mt-3 text-slate-300">Võite täita vormi või võtta otse ühendust.</p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {[
                   {
                     name: "Mark Maslov",
-                    role: "IT & Digital Transformation Consultant",
-                    phone: "+372 500 0000",
-                    email: "mark@firma.ee",
+                    role: "Cybersecurity & AI Consultant",
+                    phone: "+372 512 9624",
+                    email: "mark@raditex.ee",
                   },
                   {
-                    name: "Anna Saar",
-                    role: "Cybersecurity & AI Specialist",
-                    phone: "+372 511 1111",
-                    email: "anna@firma.ee",
+                    name: "Mait Ruut",
+                    role: "IT & Digital Transformation Consultant",
+                    phone: "+372 501 1797",
+                    email: "mait@raditex.ee",
                   },
                 ].map((person) => (
                   <motion.div
@@ -1097,15 +1098,29 @@ function HomeView({
                       <div className="font-semibold text-white">{person.name}</div>
                       <div className="text-sm text-slate-400">{person.role}</div>
                       <div className="mt-2 text-sm text-slate-300">📞 {person.phone}</div>
-                      <div className="text-sm text-slate-300">✉️ {person.email}</div>
+                      <a href={`mailto:${person.email}`} className="text-sm text-slate-300 hover:text-cyan-300 transition">
+                        ✉️ {person.email}
+                      </a>
                     </div>
                   </motion.div>
                 ))}
               </div>
 
-              <div className="mt-10 text-sm text-slate-400">või saada päring:</div>
+            </motion.div>
 
-              <form className="mt-4 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-8 md:p-10"
+            >
+              <h3 className="text-4xl font-semibold text-white">Broneeri tasuta konsultatsioon</h3>
+              <p className="mt-3 text-slate-300">Võite täita vormi või võtta otse ühendust.</p>
+
+              <div className="mt-10 text-sm text-slate-400">Saada päring:</div>
+
+              <form className="mt-4 space-y-4" action="https://formspree.io/f/mgoppvpy" method="POST">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <input
                     id="contact-name"
@@ -1153,9 +1168,9 @@ function HomeView({
                   <option value="" disabled>
                     Suurim väljakutse
                   </option>
-                  <option>Protsessid on aeglased või käsitsi</option>
+                  <option>Protsessid on aeglased või palju käsitööd</option>
                   <option>Süsteemid ei suhtle omavahel</option>
-                  <option>Küberturvalisus on ebaselge</option>
+                  <option>Küberturvalisus on ohus</option>
                   <option>Puudub ülevaade andmetest</option>
                   <option>Tahan AI-d äris rakendada</option>
                 </select>
@@ -1172,7 +1187,7 @@ function HomeView({
                 >
                   Saada päring →
                 </motion.button>
-                <p className="text-sm text-slate-400">Vastame 24 tunni jooksul. Ilma müügisurveta.</p>
+                <p className="text-sm text-slate-400">Vastame kirjalikult 24 tunni jooksul.</p>
               </form>
             </motion.div>
           </div>
@@ -1189,18 +1204,22 @@ function HomeView({
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
-              { name: "Eesti Infotehnoloogia Liit", short: "ITL" },
-              { name: "Eesti Kaubandus-Tööstuskoda", short: "KTK" },
-              { name: "Cyber Security Cluster", short: "CSC" },
-            ].map((org) => (
-              <motion.div
-                key={org.name}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="flex h-24 flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-center transition hover:border-cyan-400/30 hover:bg-white/[0.07]"
-              >
-                <div className="text-lg font-semibold text-white">{org.short}</div>
-                <div className="mt-1 text-xs text-slate-400">{org.name}</div>
-              </motion.div>
+              { name: "Eesti Infotehnoloogia ja Telekommunikatsiooni Liit", short: "ITL", file: "itl_logo.png" },
+              { name: "Eesti Konsultantide Assotsiatsioon", short: "KTK", file: "eka_logo.png" },
+              { name: "Eesti Väike- ja Keskmiste Ettevõtjate Assotsiatsioon", short: "CSC", file: "evea_logo.png" },
+              ].map((org) => (
+                <motion.div
+                  key={org.name}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  className="flex h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 text-center transition hover:border-cyan-400/30 hover:bg-white/[0.07]"
+                >
+                  <img
+                    src={`/clients/${org.file}`}
+                    alt={org.name}
+                    className="max-h-10 w-auto object-contain opacity-70 transition hover:opacity-100"
+                />
+               <div className="text-xs text-slate-400">{org.name}</div>
+          </motion.div>
             ))}
           </div>
         </section>
@@ -1208,7 +1227,7 @@ function HomeView({
 
       <footer className="border-t border-white/10 px-6 py-8 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
-          <div>© 2026 IT & Digikonsultatsioon</div>
+          <div>© 2026 Raditex OÜ</div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-white">
               Privaatsus
@@ -1364,8 +1383,12 @@ export default function Page() {
   ];
 
   const openContact = () => {
-    pendingScrollRef.current = "kontakt";
-    setCurrentView("home");
+    if (currentView === "home") {
+    scrollToSection("kontakt");
+    } else {
+      pendingScrollRef.current = "kontakt";  
+      setCurrentView("home");
+    } 
   };
 
   const detailProps: DetailPageProps = {

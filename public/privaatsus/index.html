@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="et" style="background:#0a0f1e">
+<head>
+  <style>html,body{background:#0a0f1e}</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privaatsusteave — Raditex</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0f1e;
+      --surface:   #0f172a;
+      --border:    #1e293b;
+      --accent:    #f97316;
+      --accent-dim:#7c3414;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --link:      #60a5fa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* Subtle grid texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top accent bar */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #fb923c, transparent);
+      z-index: 100;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10, 15, 30, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .back-btn:hover { color: var(--text); border-color: var(--muted); }
+    .back-btn svg { width: 14px; height: 14px; }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .page-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 600;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent-dim), var(--border), transparent);
+      margin-bottom: 3rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+      padding: 1.75rem 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.2s;
+    }
+    section:hover { border-color: #2d3f5a; }
+
+    .section-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    p { color: var(--text); font-size: 0.9rem; margin-bottom: 0.75rem; }
+    p:last-child { margin-bottom: 0; }
+
+    .sub-block {
+      margin-top: 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.03);
+      border-left: 2px solid var(--accent-dim);
+      border-radius: 0 6px 6px 0;
+    }
+    .sub-block strong {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.35rem;
+    }
+
+    ul {
+      list-style: none;
+      margin-top: 0.5rem;
+    }
+    ul li {
+      font-size: 0.9rem;
+      color: var(--text);
+      padding: 0.35rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(249,115,22,0.1);
+      color: var(--accent);
+      border: 1px solid var(--accent-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      main { padding: 2rem 1.25rem 4rem; }
+      section { padding: 1.25rem 1.25rem; }
+      nav { padding: 0 1.25rem; }
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    main > * {
+      animation: fadeUp 0.5s ease both;
+    }
+    .page-label { animation-delay: 0.05s; }
+    h1          { animation-delay: 0.1s; }
+    .meta       { animation-delay: 0.15s; }
+    .divider    { animation-delay: 0.2s; }
+    section:nth-child(1) { animation-delay: 0.25s; }
+    section:nth-child(2) { animation-delay: 0.3s; }
+    section:nth-child(3) { animation-delay: 0.35s; }
+    section:nth-child(4) { animation-delay: 0.4s; }
+    section:nth-child(5) { animation-delay: 0.45s; }
+    section:nth-child(6) { animation-delay: 0.5s; }
+  </style>
+</head>
+<body>
+
+  <div class="topbar"></div>
+
+  <nav>
+    <a href="/" class="logo">Raditex</a>
+    <a href="/" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Tagasi esilehele
+    </a>
+  </nav>
+
+  <main>
+    <div class="page-label">Juriidiline teave</div>
+    <h1>Privaatsusteave</h1>
+    <div class="meta">Raditex OÜ · Uuendatud: aprill 2026 · GDPR-ühilduv</div>
+    <div class="divider"></div>
+
+    <section>
+      <div class="section-num">01</div>
+      <h2>Üldsätted</h2>
+      <p>Käesolev privaatsusteave selgitab, kuidas Raditex OÜ (registrikood 11144268, aadress Lasnamäe tn 4c-11, 11412 Tallinn; edaspidi <em>meie</em>) töötleb veebilehe külastajate isikuandmeid kooskõlas EL-i isikuandmete kaitse üldmäärusega (GDPR).</p>
+    </section>
+
+    <section>
+      <div class="section-num">02</div>
+      <h2>Milliseid andmeid me töötleme ja miks?</h2>
+
+      <div class="sub-block">
+        <strong>Kontaktvorm ja e-post</strong>
+        <p>Kui võtad meiega ühendust, töötleme Sinu nime, e-posti aadressi ja sõnumi sisu. Töötlemise eesmärk on Sinu päringule vastamine ja konsultatsiooniteenuse osutamine.</p>
+        <p>Õiguslik alus: GDPR art. 6 lg 1 punkt f – meie õigustatud huvi klientide päringutele vastata.</p>
+      </div>
+
+      <div class="sub-block">
+        <strong>Veebistatistika <span class="badge">küpsised</span></strong>
+        <p>Kasutame Google Analyticsi, et mõista veebilehe külastatavust. Google Analytics kasutab küpsiseid, mis võivad töödelda ka Sinu IP-aadressi. Andmed edastatakse Google LLC serveritele USA-s (alusel EL-USA andmekaitseraamistik).</p>
+        <p>Küpsiste kasutamine toimub üksnes Sinu eelneval nõusolekul.</p>
+        <p>Õiguslik alus: GDPR art. 6 lg 1 punkt a – nõusolek.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-num">03</div>
+      <h2>Kes andmetele juurde pääsevad?</h2>
+      <p>Sinu andmetele on ligipääs ainult meie volitatud töötajatel. Vajadusel kasutame usaldusväärseid volitatud töötlejaid (nt veebimajutuse või e-posti teenuse pakkuja), kes on kohustatud andmeid kaitsma.</p>
+      <p>Me ei müü ega jaga Sinu isikuandmeid reklaamieesmärkidel kolmandatele osapooltele.</p>
+    </section>
+
+    <section>
+      <div class="section-num">04</div>
+      <h2>Andmete säilitamine</h2>
+      <p>Kontaktvormi kirjavahetust säilitame kuni päringu lahendamiseni või kuni 2 aastat pärast viimast kontakti.</p>
+      <p>Raamatupidamislikke andmeid säilitame seaduse alusel 7 aastat.</p>
+    </section>
+
+    <section>
+      <div class="section-num">05</div>
+      <h2>Sinu õigused</h2>
+      <p>Sul on igal ajal õigus:</p>
+      <ul>
+        <li>tutvuda oma andmetega ja nõuda nende parandamist või kustutamist</li>
+        <li>nõuda andmete töötlemise piiramist või esitada vastuväide õigustatud huvil põhineva töötlemise suhtes</li>
+        <li>saada oma andmed ülekantaval kujul (andmete ülekandmise õigus)</li>
+        <li>nõusolek tagasi võtta igal ajal, ilma et see mõjutaks enne tagasivõtmist toimunud töötlemise seaduslikkust</li>
+        <li>esitada kaebus Andmekaitse Inspektsioonile: <a href="https://www.aki.ee" target="_blank">www.aki.ee</a> · <a href="mailto:info@aki.ee">info@aki.ee</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="section-num">06</div>
+      <h2>Kontakt</h2>
+      <p>Isikuandmetega seotud küsimuste korral kirjuta meile:</p>
+      <p><a href="mailto:info@raditex.ee">info@raditex.ee</a></p>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Raditex OÜ · Kõik õigused kaitstud
+  </footer>
+
+</body>
+</html>

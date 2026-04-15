@@ -3,11 +3,6 @@ import { AnimatePresence, motion } from "framer-motion";
 
 type ViewName = "home" | "digital-roadmap" | "cybersecurity" | "ai" | "erp-process";
 
-type DashboardCard = {
-  value: string;
-  label: string;
-};
-
 type Service = {
   title: string;
   text: string;
@@ -49,11 +44,11 @@ function StickyContactCTA({ onContact }: { onContact: () => void }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: 0.6, ease: "easeOut" }}
-      className="fixed bottom-5 right-5 z-[60]"
+      className="fixed bottom-10 right-5 z-[60]"
     >
       <div className="flex items-center gap-2 rounded-full border border-cyan-400/20 bg-slate-950/90 p-2 shadow-2xl shadow-cyan-950/30 backdrop-blur-xl">
         <a
-          href="tel:+3725000000"
+          href="tel:+3725011797"
           className="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-4 text-sm font-medium text-white transition hover:border-cyan-400/20 hover:bg-white/10"
           aria-label="Helista kohe"
         >
@@ -62,7 +57,7 @@ function StickyContactCTA({ onContact }: { onContact: () => void }) {
         <motion.button
           whileHover={{ y: -2, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          type="button"
+          type="submit"
           onClick={onContact}
           className="inline-flex h-11 items-center justify-center rounded-full bg-cyan-400 px-4 text-sm font-semibold text-slate-950 transition"
         >
@@ -73,127 +68,153 @@ function StickyContactCTA({ onContact }: { onContact: () => void }) {
   );
 }
 
-function HeroDiagram({ dashboardCards }: { dashboardCards: DashboardCard[] }) {
-  const deltas = ["+14%", "+9%", "-18%", "+1.8x"];
-  const trendData = [
-    { x: 0, y: 82, label: "Jan" },
-    { x: 50, y: 68, label: "Feb" },
-    { x: 100, y: 72, label: "Mar" },
-    { x: 150, y: 48, label: "Apr" },
-    { x: 200, y: 54, label: "May" },
-    { x: 250, y: 28, label: "Jun" },
-    { x: 300, y: 18, label: "Jul" },
-  ];
-  const trendPoints = trendData.map((p) => `${p.x},${p.y}`).join(" ");
+function HeroSquare() {
+  const css = `
+    @keyframes flow { to { stroke-dashoffset: -20 } }
+    @keyframes ring {
+      0%   { transform: scale(1);   opacity: .55 }
+      100% { transform: scale(2.4); opacity: 0   }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1   }
+      50%       { opacity: .12 }
+    }
+    .hs-lv  { stroke-dasharray: 5 4; stroke-width: 1.5; fill: none; animation: flow 1.9s linear infinite; }
+    .hs-lv2 { stroke-dasharray: 5 4; stroke-width: 1.5; fill: none; animation: flow 1.9s linear infinite .95s; }
+    .hs-rng  { transform-box: fill-box; transform-origin: center; animation: ring 3s ease-out infinite;      fill: none; stroke: #1BC9E4; stroke-width: .8; }
+    .hs-rng2 { transform-box: fill-box; transform-origin: center; animation: ring 3s ease-out infinite 1.5s; fill: none; stroke: #1BC9E4; stroke-width: .8; }
+    .hs-bk  { animation: blink 2.1s ease-in-out infinite; }
+    .hs-bk2 { animation: blink 2.6s ease-in-out infinite .85s; }
+  `;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900 p-6 shadow-2xl shadow-cyan-950/30"
-    >
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <div className="text-sm text-slate-400">Tootmise juhtimispaneel</div>
-          <div className="text-xl font-semibold text-white">Reaalajas tootmise ülevaade</div>
-        </div>
-        <motion.div
-          animate={{ opacity: [0.75, 1, 0.75] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-          className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300"
-        >
-          ● Live
-        </motion.div>
-      </div>
-
-      <div className="mt-6 grid grid-cols-2 gap-4">
-        {dashboardCards.map((card, i) => (
-          <motion.div
-            key={card.label}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.08 }}
-            whileHover={{ y: -4, scale: 1.02 }}
-            className="rounded-2xl border border-white/10 bg-slate-800 p-5 transition-shadow hover:shadow-lg hover:shadow-cyan-950/30"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div className="text-2xl font-semibold text-white">{card.value}</div>
-              <div className={`text-xs font-medium ${i === 2 ? "text-amber-300" : "text-emerald-300"}`}>
-                {deltas[i]}
-              </div>
-            </div>
-            <div className="mt-1 text-sm text-slate-400">{card.label}</div>
-          </motion.div>
-        ))}
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="mt-6 rounded-2xl border border-white/10 bg-slate-800 p-4"
-      >
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <div className="text-sm text-slate-400">Tootmise KPI trend (viimased 6 kuud)</div>
-          <div className="text-xs text-slate-500">OTD · tsükliaeg · läbilaskevõime</div>
-        </div>
-        <div className="relative h-28 w-full">
-          <svg viewBox="0 0 300 100" className="h-full w-full" preserveAspectRatio="none">
-            <line x1="0" y1="20" x2="300" y2="20" stroke="rgba(255,255,255,0.08)" />
-            <line x1="0" y1="40" x2="300" y2="40" stroke="rgba(255,255,255,0.08)" />
-            <line x1="0" y1="60" x2="300" y2="60" stroke="rgba(255,255,255,0.08)" />
-            <line x1="0" y1="80" x2="300" y2="80" stroke="rgba(255,255,255,0.08)" />
-            <motion.polyline
-              fill="none"
-              stroke="#22d3ee"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              points={trendPoints}
-              initial={{ pathLength: 0, opacity: 0.4 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 1.2, ease: "easeInOut", delay: 0.25 }}
-            />
-            {trendData.map((point, i) => (
-              <motion.circle
-                key={point.label}
-                cx={point.x}
-                cy={point.y}
-                r="3.5"
-                fill="#22d3ee"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.25, delay: 0.35 + i * 0.08 }}
-              />
-            ))}
-          </svg>
-          <div className="absolute inset-x-0 bottom-0 flex justify-between px-0.5 text-[10px] text-slate-500">
-            {trendData.map((point) => (
-              <span key={point.label}>{point.label}</span>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      <div className="mt-6 grid grid-cols-3 gap-3">
-        {[
-          { title: "Tööjaamad", value: "12 aktiivset", tone: "border-white/10 bg-white/5 text-slate-400" },
-          { title: "Planeerimine", value: "ERP juhitud", tone: "border-cyan-400/20 bg-cyan-400/10 text-cyan-200" },
-          { title: "Efektiivsus", value: "+32% tootlikkus", tone: "border-emerald-400/20 bg-emerald-400/10 text-emerald-200" },
-        ].map((item) => (
-          <motion.div
-            key={item.title}
-            whileHover={{ y: -3 }}
-            transition={{ duration: 0.18 }}
-            className={`rounded-xl border p-3 text-center ${item.tone}`}
-          >
-            <div className="text-xs">{item.title}</div>
-            <div className="mt-1 font-semibold text-white">{item.value}</div>
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
+    <div style={{ width: "100%", aspectRatio: "1", maxWidth: 560, margin: "0 auto" }}>
+      <style>{css}</style>
+      <svg width="100%" height="100%" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+        <rect width="500" height="500" rx="14" fill="#060A20" />
+        <g opacity=".05" stroke="#1BC9E4" strokeWidth=".5">
+          <line x1="0" y1="62"  x2="500" y2="62"  /><line x1="0" y1="125" x2="500" y2="125" />
+          <line x1="0" y1="187" x2="500" y2="187" /><line x1="0" y1="250" x2="500" y2="250" />
+          <line x1="0" y1="312" x2="500" y2="312" /><line x1="0" y1="375" x2="500" y2="375" />
+          <line x1="0" y1="437" x2="500" y2="437" />
+          <line x1="62"  y1="0" x2="62"  y2="500" /><line x1="125" y1="0" x2="125" y2="500" />
+          <line x1="187" y1="0" x2="187" y2="500" /><line x1="250" y1="0" x2="250" y2="500" />
+          <line x1="312" y1="0" x2="312" y2="500" /><line x1="375" y1="0" x2="375" y2="500" />
+          <line x1="437" y1="0" x2="437" y2="500" />
+        </g>
+        <g fill="#1BC9E4" opacity=".09">
+          <circle cx="62"  cy="62"  r="1.5" /><circle cx="125" cy="62"  r="1.5" />
+          <circle cx="375" cy="62"  r="1.5" /><circle cx="437" cy="62"  r="1.5" />
+          <circle cx="62"  cy="437" r="1.5" /><circle cx="125" cy="437" r="1.5" />
+          <circle cx="375" cy="437" r="1.5" /><circle cx="437" cy="437" r="1.5" />
+          <circle cx="62"  cy="187" r="1.5" /><circle cx="437" cy="187" r="1.5" />
+          <circle cx="62"  cy="312" r="1.5" /><circle cx="437" cy="312" r="1.5" />
+        </g>
+        <g stroke="#1BC9E4" strokeWidth="1" fill="none" opacity=".3">
+          <path d="M22 42 L22 18 L46 18"       /><path d="M478 42 L478 18 L454 18"    />
+          <path d="M22 458 L22 482 L46 482"    /><path d="M478 458 L478 482 L454 482" />
+        </g>
+        <g stroke="#53709A" strokeWidth=".5" fill="none" opacity=".18">
+          <path d="M62 125 L125 125 L125 187"  /><path d="M437 375 L375 375 L375 312" />
+          <path d="M62 375 L125 375 L125 312"  /><path d="M437 125 L375 125 L375 187" />
+        </g>
+        <line x1="250" y1="210" x2="250" y2="105" stroke="#1BC9E4" className="hs-lv"  />
+        <line x1="250" y1="290" x2="250" y2="392" stroke="#1BC9E4" className="hs-lv2" />
+        <line x1="127" y1="250" x2="210" y2="250" stroke="#1BC9E4" className="hs-lv"  />
+        <line x1="290" y1="250" x2="372" y2="250" stroke="#1BC9E4" className="hs-lv2" />
+        <circle className="hs-rng"  cx="250" cy="250" r="55" />
+        <circle className="hs-rng2" cx="250" cy="250" r="55" />
+        <circle cx="250" cy="210" r="3" fill="#1BC9E4" className="hs-bk2" />
+        <circle cx="250" cy="290" r="3" fill="#1BC9E4" className="hs-bk"  />
+        <circle cx="210" cy="250" r="3" fill="#1BC9E4" className="hs-bk2" />
+        <circle cx="290" cy="250" r="3" fill="#1BC9E4" className="hs-bk"  />
+        <circle cx="250" cy="105" r="3" fill="#53709A" />
+        <circle cx="250" cy="392" r="3" fill="#53709A" />
+        <circle cx="127" cy="250" r="3" fill="#53709A" />
+        <circle cx="372" cy="250" r="3" fill="#53709A" />
+        <g transform="translate(250,250)">
+          <circle r="44" fill="none" stroke="#224B61" strokeWidth="1.5" />
+          <rect x="-26" y="-26" width="52" height="52" rx="6" fill="#224B61" stroke="#1BC9E4" strokeWidth="1.5" />
+          <rect x="-17" y="-17" width="34" height="34" rx="3" fill="#060A20" />
+          <line x1="-8" y1="-26" x2="-8" y2="-36" stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="0"  y1="-26" x2="0"  y2="-36" stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="8"  y1="-26" x2="8"  y2="-36" stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="-8" y1="26" x2="-8" y2="36" stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="0"  y1="26" x2="0"  y2="36" stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="8"  y1="26" x2="8"  y2="36" stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="-26" y1="-8" x2="-36" y2="-8" stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="-26" y1="0"  x2="-36" y2="0"  stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="-26" y1="8"  x2="-36" y2="8"  stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="26" y1="-8" x2="36" y2="-8" stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="26" y1="0"  x2="36" y2="0"  stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="26" y1="8"  x2="36" y2="8"  stroke="#1BC9E4" strokeWidth="1.5" />
+          <line x1="-17" y1="-5" x2="17" y2="-5" stroke="#224B61" strokeWidth=".8" />
+          <line x1="-17" y1="5"  x2="17" y2="5"  stroke="#224B61" strokeWidth=".8" />
+          <circle r="8" fill="#1BC9E4" />
+          <circle r="3.5" fill="#060A20" className="hs-bk" />
+        </g>
+        <text x="250" y="308" fontSize="14" fill="#1BC9E4" textAnchor="middle" fontFamily="monospace" letterSpacing="1.8" opacity=".55">OPTIMEERITUD</text>
+        <text x="250" y="320" fontSize="14" fill="#1BC9E4" textAnchor="middle" fontFamily="monospace" letterSpacing="1.8" opacity=".55">PROTSESSID</text>
+        <g transform="translate(250,75)">
+          <rect x="-68" y="-30" width="136" height="60" rx="7" fill="#224B61" stroke="#1BC9E4" strokeWidth="1" />
+          <rect x="-68" y="-30" width="136" height="3"  rx="1" fill="#1BC9E4" opacity=".6" />
+          <rect x="-55" y="-6" width="19" height="16" rx="3" fill="#1BC9E4" />
+          <path d="M-50,-6 L-50,-13 A6,6 0 0 1 -38,-13 L-38,-6" fill="none" stroke="#1BC9E4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="-45.5" cy="3" r="2" fill="#060A20" />
+          <rect x="-47" y="4" width="3" height="3" fill="#060A20" />
+          <text x="-24" y="2"  fontSize="13" fill="#1BC9E4" fontFamily="monospace" fontWeight="500" letterSpacing=".5">TURVALISUS</text>
+          <text x="-24" y="16" fontSize="11" fill="#A8C1D9" fontFamily="monospace">ISO 27001</text>
+          <circle cx="55" cy="-18" r="3.5" fill="#1BC9E4" className="hs-bk" />
+        </g>
+        <g transform="translate(250,422)">
+          <rect x="-74" y="-30" width="148" height="60" rx="7" fill="#224B61" stroke="#1BC9E4" strokeWidth="1" />
+          <rect x="-74" y="27"  width="148" height="3"  rx="1" fill="#1BC9E4" opacity=".4" />
+          <rect x="-62" y="-14" width="26" height="6" rx="2" fill="#1BC9E4" />
+          <rect x="-62" y="-6"  width="26" height="6" rx="2" fill="#1BC9E4" opacity=".58" />
+          <rect x="-62" y="2"   width="26" height="6" rx="2" fill="#1BC9E4" opacity=".3"  />
+          <circle cx="-43" cy="-11" r="1.5" fill="#B5BAC2" className="hs-bk"  />
+          <circle cx="-43" cy="-3"  r="1.5" fill="#B5BAC2" className="hs-bk2" />
+          <text x="-27" y="-9" fontSize="13" fill="#1BC9E4" fontFamily="monospace" fontWeight="500" letterSpacing=".5">KORRASTATUD</text>
+          <text x="-27" y="6"  fontSize="13" fill="#1BC9E4" fontFamily="monospace" fontWeight="500" letterSpacing=".5">ANDMED</text>
+          <text x="-27" y="20" fontSize="10" fill="#A8C1D9" fontFamily="monospace">24/7 monitooring</text>
+        </g>
+        <g transform="translate(68,250)">
+          <rect x="-59" y="-48" width="118" height="40" rx="6" fill="#224B61" stroke="#53709A" strokeWidth=".8" />
+          <rect x="-59" y="-48" width="3"   height="40" rx="1" fill="#1BC9E4" opacity=".5" />
+          <text x="-3" y="-30" fontSize="13" fill="#1BC9E4" fontFamily="monospace" textAnchor="middle" fontWeight="500" letterSpacing=".5">KLIENDID</text>
+          <text x="0"  y="-14" fontSize="10" fill="#A8C1D9" fontFamily="monospace" textAnchor="middle">andmevoog</text>
+          <rect x="-59" y="-4" width="118" height="40" rx="6" fill="#224B61" stroke="#53709A" strokeWidth=".8" opacity=".75" />
+          <rect x="-59" y="-4" width="3"   height="40" rx="1" fill="#53709A" opacity=".5" />
+          <text x="0" y="18" fontSize="13" fill="#1BC9E4" fontFamily="monospace" textAnchor="middle" fontWeight="500" letterSpacing=".5">TARNIJAD</text>
+          <text x="0" y="28" fontSize="10" fill="#A8C1D9" fontFamily="monospace" textAnchor="middle">integratsioon</text>
+        </g>
+        <g transform="translate(432,250)">
+          <rect x="-60" y="-46" width="120" height="92" rx="7" fill="#224B61" stroke="#53709A" strokeWidth="1" />
+          <rect x="57"  y="-46" width="3"   height="92" rx="1" fill="#1BC9E4" opacity=".45" />
+          <rect x="24" y="-42" width="28" height="16" rx="4" fill="#060A20" stroke="#1BC9E4" strokeWidth=".6" />
+          <text x="38" y="-31" fontSize="12" fill="#1BC9E4" fontFamily="monospace" textAnchor="middle" fontWeight="500">AI</text>
+          <text x="-8" y="-30" fontSize="11" fill="#1BC9E4" fontFamily="monospace" textAnchor="middle" letterSpacing="1">KASV</text>
+          <text x="20" y="-2"  fontSize="21" fill="#1BC9E4" fontFamily="monospace" textAnchor="middle" fontWeight="bold">+14%</text>
+          <rect x="-53" y="10"  width="10" height="18" rx="1" fill="#1BC9E4" opacity=".25" />
+          <rect x="-40" y="2"   width="10" height="26" rx="1" fill="#1BC9E4" opacity=".52" />
+          <rect x="-27" y="-10" width="10" height="38" rx="1" fill="#1BC9E4" />
+          <line x1="-55" y1="15" x2="-13" y2="-13" stroke="#B5BAC2" strokeWidth="1.5" />
+          <polygon points="-9,-17 -5,-9 -18,-12" fill="#B5BAC2" />
+          <text x="-8" y="40" fontSize="8.5" fill="#A8C1D9" fontFamily="monospace" textAnchor="middle">Automatiseerimine</text>
+        </g>
+        <circle cx="140" cy="140" r="1.5" fill="#1BC9E4" opacity=".35" className="hs-bk"  />
+        <circle cx="362" cy="132" r="1.5" fill="#53709A" opacity=".45" className="hs-bk2" />
+        <circle cx="142" cy="362" r="1.5" fill="#1BC9E4" opacity=".3"  className="hs-bk"  />
+        <circle cx="360" cy="368" r="1.5" fill="#53709A" opacity=".4"  className="hs-bk2" />
+        <circle cx="194" cy="462" r="1.5" fill="#1BC9E4" opacity=".25" className="hs-bk"  />
+        <circle cx="308" cy="40"  r="1.5" fill="#53709A" opacity=".28" className="hs-bk2" />
+        <g transform="translate(450,28)">
+          <rect x="-22" y="-11" width="50" height="22" rx="11" fill="#060A20" stroke="#1BC9E4" strokeWidth=".8" />
+          <circle cx="-10" cy="0" r="3.5" fill="#1BC9E4" className="hs-bk" />
+          <text x="1" y="4" fontSize="9" fill="#1BC9E4" fontFamily="monospace" fontWeight="500">Live</text>
+        </g>
+      </svg>
+    </div>
   );
 }
 
@@ -380,7 +401,7 @@ function DetailPageTemplate({
 export function DigitalRoadmapPage({ onBack, onContact }: DetailPageProps) {
   return (
     <DetailPageTemplate
-      eyebrow="Digitaalne teekaart"
+      eyebrow="Digitaliseerimise teekaart"
       title="Selge plaan, kuidas tehnoloogia toetab teie äri kasvu"
       intro="Digitaalne teekaart ei ole raport. See on otsuste tegemise tööriist. Loome struktureeritud plaani, mis näitab täpselt, mida teha, millal teha ja mis mõju see annab."
       sections={[
@@ -528,7 +549,6 @@ function HomeView({
   reasons,
   beforeAfter,
   stats,
-  dashboardCards,
   openContact,
   setCurrentView,
 }: {
@@ -538,7 +558,6 @@ function HomeView({
   reasons: Reason[];
   beforeAfter: BeforeAfterRow[];
   stats: { value: string; label: string }[];
-  dashboardCards: DashboardCard[];
   openContact: () => void;
   setCurrentView: (view: ViewName) => void;
 }) {
@@ -562,13 +581,14 @@ function HomeView({
             isScrolled ? "py-2" : "py-4"
           }`}
         >
-          <div
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className={`font-semibold uppercase tracking-[0.24em] text-cyan-300 transition-all duration-300 ${
               isScrolled ? "text-xs" : "text-sm"
             }`}
           >
-            IT & Digikonsultatsioon
-          </div>
+            <img src="/logo_white.svg" alt="Logo" className="h-5 w-auto w-auto sm:h-7" />
+          </button>
 
           <nav
             className={`hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-sm text-slate-300 transition-all duration-300 md:flex ${
@@ -578,6 +598,7 @@ function HomeView({
             {[
               { id: "teenused", label: "Teenused" },
               { id: "miks", label: "Miks meie" },
+              { id: "pricing", label: "Hinnastamine" },
               { id: "tulemused", label: "Tulemused" },
               { id: "kontakt", label: "Kontakt" },
             ].map((item) => {
@@ -639,7 +660,7 @@ function HomeView({
         <section className="mx-auto grid max-w-7xl gap-14 px-6 pb-20 pt-16 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pb-28 lg:pt-24">
           <div className="max-w-2xl">
             <div className="mb-6 inline-flex items-center rounded-full border border-cyan-400/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-300">
-              IT- ja digikonsultant VKE-dele
+              IT- ja digikonsultant tootmisettevõtetele
             </div>
             <h1 className="max-w-xl text-5xl font-semibold leading-tight tracking-tight text-white md:text-6xl">
               IT, mis töötab. Äri, mis kasvab.
@@ -648,7 +669,7 @@ function HomeView({
               Lõpetage IT probleemide lahendamine ja hakake juhtima äri. Me loome süsteemi, kus andmed liiguvad automaatselt, otsused põhinevad faktidel ja riskid on kontrolli all.
             </p>
             <div className="mt-5 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-200">
-              Tüüpiline tulemus: vähem käsitööd · rohkem kontrolli · kiirem kasv
+              Kiire põhjalik ülevaade · selge plaan · mõõdetavad tulemused
             </div>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
@@ -679,7 +700,7 @@ function HomeView({
           </div>
 
           <div className="relative">
-            <HeroDiagram dashboardCards={dashboardCards} />
+            <HeroSquare />
           </div>
         </section>
 
@@ -691,14 +712,24 @@ function HomeView({
           </div>
 
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-5">
-            {["Raintar", "Monik", "Raditex", "Maadlex", "Scandic"].map((name) => (
+            {[
+              { name: "Haapsalu Uks", file: "haapsalu_uks_logo.png" },
+              { name: "Harviker", file: "harviker_logo.jpg" },
+              { name: "Sulemees", file: "sulemees_logo.png" },
+              { name: "Carglass", file: "carglass_logo.png" },
+              { name: "Printbest", file: "printbest_logo.png" },
+            ].map((client) => (
               <motion.div
-                key={name}
+                key={client.name}
                 whileHover={{ scale: 1.05, y: -2 }}
                 className="flex h-20 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-sm text-slate-400 transition hover:border-cyan-400/30 hover:text-white"
               >
-                {name}
-              </motion.div>
+                <img
+                src={`/clients/${client.file}`}
+                alt={client.name}
+                className="max-h-18 w-auto object-contain opacity-70 transition hover:opacity-100"
+               />
+             </motion.div>
             ))}
           </div>
         </section>
@@ -738,11 +769,12 @@ function HomeView({
                 Üks partner. Kõik kriitilised punktid kaetud.
               </div>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-                IT ei pea olema killustunud, reageeriv ega raskesti juhitav.
+                Kas teie IT toetab ettevõtte kasvu - või pidurdab?
               </h2>
             </div>
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 text-lg leading-8 text-slate-300">
-              Väikeettevõtte IT on sageli killustunud: keegi haldab võrku, keegi hooldab arvuteid, strateegia on katmata, andmed on laiali ja turvariskid jäävad tähelepanuta. Me ei täida üksikut lünka. Aitame näha ja lahendada kogu pilti — strateegiast protsessideni, tarkvaravalikust küberturvalisuse ja AI rakendamiseni. Ilma tehnilise žargoonita.
+              Ettevõtjad kaotavad igapäevaselt aega ja raha protsessidele, mis ei tööta; tarkvarale, mis ei sobi ja turvariskidele, mida ei nähta. Aitame näha tervikut ja anda lahendus — strateegiast protsessideni, tarkvara valikust küberturvalisuse ja AI rakendamiseni.
+.
             </div>
           </div>
         </section>
@@ -827,7 +859,7 @@ function HomeView({
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8" id="pricing">
+        <section className="mx-auto max-w-7xl scroll-mt-28 px-6 py-20 lg:px-8" id="pricing">
           <div className="mb-12 max-w-3xl">
             <div className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">Hinnastamine</div>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
@@ -922,14 +954,14 @@ function HomeView({
                 </div>
                 <button
                   type="button"
-                  onClick={openContact}
+                  onClick={() => scrollToSection("kontakt")}
                   className={`mt-6 w-full rounded-2xl px-5 py-3 text-sm font-semibold transition ${
                     plan.featured
                       ? "bg-cyan-400 text-slate-950 hover:-translate-y-0.5"
                       : "border border-white/10 bg-white/5 text-white hover:bg-white/10"
                   }`}
                 >
-                  Aruta sobivat varianti
+                  Küsi hinnapakkumist
                 </button>
               </motion.div>
             ))}
@@ -966,7 +998,7 @@ function HomeView({
               transition={{ duration: 0.45, delay: 0.08 }}
               className="rounded-[2rem] border border-cyan-400/20 bg-gradient-to-br from-cyan-400/10 to-blue-500/10 p-8"
             >
-              <div className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">Mida hind sõltub?</div>
+              <div className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">Millest hind sõltub?</div>
               <h3 className="mt-4 text-2xl font-semibold text-white">Täpsustame mahu pärast esmast konsultatsiooni</h3>
               <div className="mt-6 space-y-3 text-sm leading-7 text-slate-300">
                 <p>• ettevõtte suurus ja protsesside keerukus</p>
@@ -1054,31 +1086,20 @@ function HomeView({
                 <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2">Ilma kohustuseta</span>
                 <span className="rounded-full border border-white/10 bg-white/10 px-4 py-2">Vastus 24h jooksul</span>
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: 0.08 }}
-              className="rounded-[2rem] border border-white/10 bg-white/5 p-8 md:p-10"
-            >
-              <h3 className="text-2xl font-semibold text-white">Broneeri tasuta konsultatsioon</h3>
-              <p className="mt-3 text-slate-300">Võite täita vormi või võtta otse ühendust.</p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {[
                   {
                     name: "Mark Maslov",
-                    role: "IT & Digital Transformation Consultant",
-                    phone: "+372 500 0000",
-                    email: "mark@firma.ee",
+                    role: "Cybersecurity & AI Consultant",
+                    phone: "+372 512 9624",
+                    email: "mark@raditex.ee",
                   },
                   {
-                    name: "Anna Saar",
-                    role: "Cybersecurity & AI Specialist",
-                    phone: "+372 511 1111",
-                    email: "anna@firma.ee",
+                    name: "Mait Ruut",
+                    role: "IT & Digital Transformation Consultant",
+                    phone: "+372 501 1797",
+                    email: "mait@raditex.ee",
                   },
                 ].map((person) => (
                   <motion.div
@@ -1096,15 +1117,29 @@ function HomeView({
                       <div className="font-semibold text-white">{person.name}</div>
                       <div className="text-sm text-slate-400">{person.role}</div>
                       <div className="mt-2 text-sm text-slate-300">📞 {person.phone}</div>
-                      <div className="text-sm text-slate-300">✉️ {person.email}</div>
+                      <a href={`mailto:${person.email}`} className="text-sm text-slate-300 hover:text-cyan-300 transition">
+                        ✉️ {person.email}
+                      </a>
                     </div>
                   </motion.div>
                 ))}
               </div>
 
-              <div className="mt-10 text-sm text-slate-400">või saada päring:</div>
+            </motion.div>
 
-              <form className="mt-4 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-8 md:p-10"
+            >
+              <h3 className="text-4xl font-semibold text-white">Broneeri tasuta konsultatsioon</h3>
+              <p className="mt-3 text-slate-300">Võite täita vormi või võtta otse ühendust.</p>
+
+              <div className="mt-10 text-sm text-slate-400">Saada päring:</div>
+
+              <form className="mt-4 space-y-4" action="https://formspree.io/f/mgoppvpy" method="POST">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <input
                     id="contact-name"
@@ -1152,9 +1187,9 @@ function HomeView({
                   <option value="" disabled>
                     Suurim väljakutse
                   </option>
-                  <option>Protsessid on aeglased või käsitsi</option>
+                  <option>Protsessid on aeglased või palju käsitööd</option>
                   <option>Süsteemid ei suhtle omavahel</option>
-                  <option>Küberturvalisus on ebaselge</option>
+                  <option>Küberturvalisus on ohus</option>
                   <option>Puudub ülevaade andmetest</option>
                   <option>Tahan AI-d äris rakendada</option>
                 </select>
@@ -1171,7 +1206,7 @@ function HomeView({
                 >
                   Saada päring →
                 </motion.button>
-                <p className="text-sm text-slate-400">Vastame 24 tunni jooksul. Ilma müügisurveta.</p>
+                <p className="text-sm text-slate-400">Vastame kirjalikult 24 tunni jooksul.</p>
               </form>
             </motion.div>
           </div>
@@ -1188,18 +1223,22 @@ function HomeView({
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             {[
-              { name: "Eesti Infotehnoloogia Liit", short: "ITL" },
-              { name: "Eesti Kaubandus-Tööstuskoda", short: "KTK" },
-              { name: "Cyber Security Cluster", short: "CSC" },
-            ].map((org) => (
-              <motion.div
-                key={org.name}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="flex h-24 flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-center transition hover:border-cyan-400/30 hover:bg-white/[0.07]"
-              >
-                <div className="text-lg font-semibold text-white">{org.short}</div>
-                <div className="mt-1 text-xs text-slate-400">{org.name}</div>
-              </motion.div>
+              { name: "Eesti Infotehnoloogia ja Telekommunikatsiooni Liit", short: "ITL", file: "itl_logo.png" },
+              { name: "Eesti Konsultantide Assotsiatsioon", short: "KTK", file: "eka_logo.png" },
+              { name: "Eesti Väike- ja Keskmiste Ettevõtjate Assotsiatsioon", short: "CSC", file: "evea_logo.png" },
+              ].map((org) => (
+                <motion.div
+                  key={org.name}
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  className="flex h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 text-center transition hover:border-cyan-400/30 hover:bg-white/[0.07]"
+                >
+                  <img
+                    src={`/clients/${org.file}`}
+                    alt={org.name}
+                    className="max-h-10 w-auto object-contain opacity-70 transition hover:opacity-100"
+                />
+               <div className="text-xs text-slate-400">{org.name}</div>
+          </motion.div>
             ))}
           </div>
         </section>
@@ -1207,7 +1246,7 @@ function HomeView({
 
       <footer className="border-t border-white/10 px-6 py-8 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
-          <div>© 2026 IT & Digikonsultatsioon</div>
+          <div>© 2026 Raditex OÜ</div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-white">
               Privaatsus
@@ -1241,7 +1280,7 @@ export default function Page() {
   useEffect(() => {
     if (typeof window === "undefined" || currentView !== "home") return;
 
-    const sectionIds = ["teenused", "miks", "tulemused", "kontakt"];
+    const sectionIds = ["teenused", "pricing", "miks", "tulemused", "kontakt"];
     const handleScroll = () => {
       const offset = 160;
       let current = sectionIds[0];
@@ -1355,16 +1394,13 @@ export default function Page() {
     []
   );
 
-  const dashboardCards: DashboardCard[] = [
-    { value: "128", label: "tellimust nädalas" },
-    { value: "92%", label: "täitmise täpsus (OTD)" },
-    { value: "6.5h", label: "keskmine tootmistsükkel" },
-    { value: "1.8x", label: "läbilaskevõime kasv" },
-  ];
-
   const openContact = () => {
-    pendingScrollRef.current = "kontakt";
-    setCurrentView("home");
+    if (currentView === "home") {
+    scrollToSection("kontakt");
+    } else {
+      pendingScrollRef.current = "kontakt";  
+      setCurrentView("home");
+    } 
   };
 
   const detailProps: DetailPageProps = {
@@ -1389,7 +1425,6 @@ export default function Page() {
         reasons={reasons}
         beforeAfter={beforeAfter}
         stats={stats}
-        dashboardCards={dashboardCards}
         openContact={openContact}
         setCurrentView={setCurrentView}
       />

@@ -1080,7 +1080,7 @@ function HomeView({
                 <img
                 src={`/clients/${client.file}`}
                 alt={client.name}
-                className="max-h-18 w-auto object-contain opacity-50 grayscale brightness-100 transition hover:opacity-80"
+                className="max-h-18 w-auto object-contain opacity-50 grayscale brightness-100 transition duration-300 hover:opacity-80 hover:grayscale-0"
                />
              </motion.div>
             ))}
@@ -1261,7 +1261,7 @@ function HomeView({
                   <img
                     src={`/clients/${org.file}`}
                     alt={org.name}
-                    className="max-h-10 w-auto object-contain opacity-50 grayscale brightness-100 transition hover:opacity-80"
+                    className="max-h-10 w-auto object-contain opacity-50 grayscale brightness-100 transition duration-300 hover:opacity-80 hover:grayscale-0"
                 />
                <div className="text-xs text-slate-400">{org.name}</div>
           </motion.div>
